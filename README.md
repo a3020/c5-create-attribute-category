@@ -4,7 +4,7 @@ Concrete5 - create new attribute category
 PHP-script to generate classes for a new concrete5 attribute category.
 
 **Usage:**
-php create.php --at-name=lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
+php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
 	
 **Optional parameters:**
 --p-handle (package handle)

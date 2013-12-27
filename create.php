@@ -8,7 +8,7 @@
 		Creates files for an attribute category to save data against.
 		
 	Usage: 
-		php create.php --at-name=lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
+		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
 	
 	Optional parameters: 
 		--p-handle (package handle)
