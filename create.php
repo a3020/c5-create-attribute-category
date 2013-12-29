@@ -3,19 +3,17 @@
 
 /*
 	Author: Adri Kodde (@akodde)
+	Repo: https://github.com/akodde/c5-create-attribute-category
 	
 	Purpose: 
-		Creates files for an attribute category to save data against.
+		Create files for an attribute category to save data against.
 		
-	Usage: 
+	Usage example: 
 		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
+		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts --p-handle=pro_blog
 	
-	Optional parameters: 
+	Optional parameters:
 		--p-handle (package handle)
-	
-	Additional information:
-		You need to run this file from the command line and provide at least three parameters. The package handle is optional, but recommended.
-		Don't use existing names such as collection, page, file, etc. as they will likely interfere with existing models.	
 */
 
 if (php_sapi_name() != 'cli') {
