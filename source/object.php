@@ -5,12 +5,12 @@ class CamelCaseObject extends Object {
 	public static $table = 'TABLE_NAME';
 	
 	function getCamelCaseObjectID() {
-		return $this->itemID;
+		return $this->ATTRIBUTE_ID;
 	}
 	
 	protected function load($ID) {
 		$db = Loader::db();
-		$row = $db->GetRow("SELECT * FROM ".self::$table." WHERE itemID = ?", array($ID));
+		$row = $db->GetRow("SELECT * FROM ".self::$table." WHERE ATTRIBUTE_ID = ?", array($ID));
 		$this->setPropertiesFromArray($row);
 	}
 	
@@ -33,9 +33,9 @@ class CamelCaseObject extends Object {
 	
 	public function delete() {
 		$db = Loader::db();
-		$db->Execute("delete from ".self::$table." where itemID = ?", array($this->itemID));
+		$db->Execute("delete from ".self::$table." where ATTRIBUTE_ID = ?", array($this->ATTRIBUTE_ID));
 		
-		$r = $db->Execute('select avID, akID from CamelCaseObjectAttributeValues where itemID = ?', array($this->itemID));
+		$r = $db->Execute('select avID, akID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ?', array($this->ATTRIBUTE_ID));
 		Loader::model('attribute/categories/lowercase_object'PACKAGE_HANDLE);
 		while ($row = $r->FetchRow()) {
 			$uak = CamelCaseObjectAttributeKey::getByID($row['akID']);
@@ -85,9 +85,9 @@ class CamelCaseObject extends Object {
 		
 		$db = Loader::db();
 
-		$db->Execute('delete from CamelCaseObjectSearchIndexAttributes where itemID = ?', array($this->getCamelCaseObjectID()));
-		$searchableAttributes = array('itemID' => $this->getCamelCaseObjectID());
-		$rs = $db->Execute('select * from CamelCaseObjectSearchIndexAttributes where itemID = -1');
+		$db->Execute('delete from CamelCaseObjectSearchIndexAttributes where ATTRIBUTE_ID = ?', array($this->getCamelCaseObjectID()));
+		$searchableAttributes = array('ATTRIBUTE_ID' => $this->getCamelCaseObjectID());
+		$rs = $db->Execute('select * from CamelCaseObjectSearchIndexAttributes where ATTRIBUTE_ID = -1');
 		AttributeKey::reindex('CamelCaseObjectSearchIndexAttributes', $searchableAttributes, $attribs, $rs);
 	}
 	
@@ -97,7 +97,7 @@ class CamelCaseObject extends Object {
 		$db = Loader::db();
 		$av = false;
 		$v = array($this->getCamelCaseObjectID(), $ak->getAttributeKeyID());
-		$avID = $db->GetOne("select avID from CamelCaseObjectAttributeValues where itemID = ? and akID = ?", $v);
+		$avID = $db->GetOne("select avID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ? and akID = ?", $v);
 		if ($avID > 0) {
 			$av = CamelCaseObjectAttributeValue::getByID($avID);
 			if (is_object($av)) {

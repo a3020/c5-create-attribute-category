@@ -7,16 +7,16 @@ class CamelCaseObjectAttributeKey extends AttributeKey {
 		return 'CamelCaseObjectSearchIndexAttributes';
 	}
 
-	protected $searchIndexFieldDefinition = 'itemID I(11) UNSIGNED NOTNULL DEFAULT 0 PRIMARY';
+	protected $searchIndexFieldDefinition = 'ATTRIBUTE_ID I(11) UNSIGNED NOTNULL DEFAULT 0 PRIMARY';
 
 	/** 
 	 * Returns an attribute value list of attributes and values (duh) which a *** version can store 
 	 * against its object.
 	 * @return AttributeValueList
 	 */
-	public function getAttributes($itemID, $method = 'getValue') {
+	public function getAttributes($ATTRIBUTE_ID, $method = 'getValue') {
 		$db = Loader::db();
-		$values = $db->GetAll("select akID, avID from CamelCaseObjectAttributeValues where itemID = ?", array($itemID));
+		$values = $db->GetAll("select akID, avID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ?", array($ATTRIBUTE_ID));
 		$avl = new AttributeValueList();
 		foreach($values as $val) {
 			$ak = CamelCaseObjectAttributeKey::getByID($val['akID']);
@@ -92,18 +92,18 @@ class CamelCaseObjectAttributeKey extends AttributeKey {
 	}
 	
 	protected function saveAttribute($object, $value = false) {
-		// We check a itemID/cvID/akID combo, and if that particular combination has an attribute value ID that
-		// is NOT in use anywhere else on the same itemID, cvID, akID combo, we use it (so we reuse IDs)
+		// We check a ATTRIBUTE_ID/cvID/akID combo, and if that particular combination has an attribute value ID that
+		// is NOT in use anywhere else on the same ATTRIBUTE_ID, cvID, akID combo, we use it (so we reuse IDs)
 		// otherwise generate new IDs
 		$av = $object->getAttributeValueObject($this, true);
 		parent::saveAttribute($av, $value);
 		$db = Loader::db();
 		$v = array($object->getCamelCaseObjectID(), $this->getAttributeKeyID(), $av->getAttributeValueID());
 		$db->Replace('CamelCaseObjectAttributeValues', array(
-			'itemID' => $object->getCamelCaseObjectID(), 
+			'ATTRIBUTE_ID' => $object->getCamelCaseObjectID(), 
 			'akID' => $this->getAttributeKeyID(), 
 			'avID' => $av->getAttributeValueID()
-		), array('itemID', 'akID'));
+		), array('ATTRIBUTE_ID', 'akID'));
 		unset($av);
 	}
 	
@@ -151,7 +151,7 @@ class CamelCaseObjectAttributeValue extends AttributeValue {
 
 	public function delete() {
 		$db = Loader::db();
-		$db->Execute('delete from CamelCaseObjectAttributeValues where itemID = ? and akID = ? and avID = ?', array(
+		$db->Execute('delete from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ? and akID = ? and avID = ?', array(
 			$this->item->getCamelCaseObjectID(), 
 			$this->attributeKey->getAttributeKeyID(),
 			$this->getAttributeValueID()

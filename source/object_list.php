@@ -13,7 +13,7 @@ class CamelCaseObjectList extends DatabaseItemList {
 		$this->createQuery();
 		$r = parent::get( $itemsToGet, intval($offset));
 		foreach($r as $row) {
-			$ui = CamelCaseObject::getByID($row['itemID']);			
+			$ui = CamelCaseObject::getByID($row['ATTRIBUTE_ID']);			
 			$list[] = $ui;
 		}
 		return $list;
@@ -33,9 +33,9 @@ class CamelCaseObjectList extends DatabaseItemList {
 	}
 	
 	protected function setBaseQuery() {
-		$this->setQuery('SELECT tbl.itemID FROM TABLE_NAME tbl ');
+		$this->setQuery('SELECT tbl.ATTRIBUTE_ID FROM TABLE_NAME tbl ');
 		
-		$this->setupAttributeFilters("left join CamelCaseObjectSearchIndexAttributes on (CamelCaseObjectSearchIndexAttributes.itemID = tbl.itemID)");
+		$this->setupAttributeFilters("left join CamelCaseObjectSearchIndexAttributes on (CamelCaseObjectSearchIndexAttributes.ATTRIBUTE_ID = tbl.ATTRIBUTE_ID)");
 	}
 
 	/* magic method for filtering by page attributes. */
@@ -52,7 +52,7 @@ class CamelCaseObjectList extends DatabaseItemList {
 	}
 	
 	
-	public function sortByItemIDDescending() {
-		parent::sortBy('tbl.itemID', 'desc');
+	public function sortByATTRIBUTE_IDDescending() {
+		parent::sortBy('tbl.ATTRIBUTE_ID', 'desc');
 	}
 }

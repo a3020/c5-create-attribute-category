@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <schema version="0.3">
 	<table name="CamelCaseObjectAttributeValues">
-		<field name="itemID" type="I">
+		<field name="ATTRIBUTE_ID" type="I">
 			<KEY/>
 			<DEFAULT value="0"/>
 			<UNSIGNED/>
@@ -18,7 +18,7 @@
 		</field>
 	</table>
 	<table name="TABLE_NAME">
-		<field name="itemID" type="I">
+		<field name="ATTRIBUTE_ID" type="I">
 			<key />
 			<unsigned />
 			<autoincrement />

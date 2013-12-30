@@ -11,6 +11,7 @@
 	Usage example: 
 		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
 		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts --p-handle=pro_blog
+		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts --p-handle=pro_blog --at-id=blogID
 	
 	Optional parameters:
 		--p-handle (package handle)
@@ -23,7 +24,9 @@ if (php_sapi_name() != 'cli') {
 
 $arguments = array_slice($argv, 1);
 
+// defaults
 $PACKAGE_HANDLE = false;
+$ATTRIBUTE_ID = 'itemID';
 
 foreach($arguments as $val) {
 	$val = explode('=', $val);
@@ -34,12 +37,15 @@ foreach($arguments as $val) {
 		case '--at-name-camelcase':
 			$ATTRIBUTE_NAME_CAMELCASE = next($val);
 		break;
+		case '--at-id':
+			$ATTRIBUTE_ID = next($val);
+		break;
 		case '--table-name-camelcase':
 			$TABLE_NAME_CAMELCASE = next($val);
 		break;
 		case '--p-handle':
 			$PACKAGE_HANDLE = next($val);
-		break;
+		break;		
 	}
 }
 
@@ -58,10 +64,12 @@ function replaceTextHolders($source){
 	global $TABLE_NAME_CAMELCASE;
 	global $ATTRIBUTE_NAME_CAMELCASE;
 	global $ATTRIBUTE_NAME_LOWERCASE;
+	global $ATTRIBUTE_ID;
 	
 	$source = str_replace('TABLE_NAME', $TABLE_NAME_CAMELCASE, $source);
 	$source = str_replace('CamelCaseObject', $ATTRIBUTE_NAME_CAMELCASE, $source);
 	$source = str_replace('lowercase_object', $ATTRIBUTE_NAME_LOWERCASE, $source);
+	$source = str_replace('ATTRIBUTE_ID', $ATTRIBUTE_ID, $source);
 	
 	if($PACKAGE_HANDLE){
 		$source = str_replace("PACKAGE_HANDLE", ", '".$PACKAGE_HANDLE."'", $source);
