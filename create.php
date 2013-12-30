@@ -95,5 +95,10 @@ $file = replaceTextHolders($file);
 file_put_contents('models/'.$ATTRIBUTE_NAME_LOWERCASE.'_list.php', $file);
 
 
+// CREATE DATABASE SCHEMA (db.xml)
+$file = file_get_contents('source/db.xml');
+$file = replaceTextHolders($file);
+file_put_contents('models/db.xml', $file);
+
 echo ">>> Files have been created! \n";
 exit(1);
