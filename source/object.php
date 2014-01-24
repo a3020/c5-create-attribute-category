@@ -35,7 +35,7 @@ class CamelCaseObject extends Object {
 		$db = Loader::db();
 		$db->Execute("delete from ".self::$table." where ATTRIBUTE_ID = ?", array($this->ATTRIBUTE_ID));
 		
-		$r = $db->Execute('select avID, akID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ?', array($this->ATTRIBUTE_ID));
+		$r = $db->Execute('select avID, akID from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ?', array($this->ATTRIBUTE_ID));
 		Loader::model('attribute/categories/lowercase_object'PACKAGE_HANDLE);
 		while ($row = $r->FetchRow()) {
 			$uak = CamelCaseObjectAttributeKey::getByID($row['akID']);
@@ -85,10 +85,10 @@ class CamelCaseObject extends Object {
 		
 		$db = Loader::db();
 
-		$db->Execute('delete from CamelCaseObjectSearchIndexAttributes where ATTRIBUTE_ID = ?', array($this->getCamelCaseObjectID()));
+		$db->Execute('delete from TABLE_NAMESearchIndexAttributes where ATTRIBUTE_ID = ?', array($this->getCamelCaseObjectID()));
 		$searchableAttributes = array('ATTRIBUTE_ID' => $this->getCamelCaseObjectID());
-		$rs = $db->Execute('select * from CamelCaseObjectSearchIndexAttributes where ATTRIBUTE_ID = -1');
-		AttributeKey::reindex('CamelCaseObjectSearchIndexAttributes', $searchableAttributes, $attribs, $rs);
+		$rs = $db->Execute('select * from TABLE_NAMESearchIndexAttributes where ATTRIBUTE_ID = -1');
+		AttributeKey::reindex('TABLE_NAMESearchIndexAttributes', $searchableAttributes, $attribs, $rs);
 	}
 	
 	
@@ -97,7 +97,7 @@ class CamelCaseObject extends Object {
 		$db = Loader::db();
 		$av = false;
 		$v = array($this->getCamelCaseObjectID(), $ak->getAttributeKeyID());
-		$avID = $db->GetOne("select avID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ? and akID = ?", $v);
+		$avID = $db->GetOne("select avID from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ? and akID = ?", $v);
 		if ($avID > 0) {
 			$av = CamelCaseObjectAttributeValue::getByID($avID);
 			if (is_object($av)) {
@@ -111,7 +111,7 @@ class CamelCaseObject extends Object {
 		
 			// Is this avID in use ?
 			if (is_object($av)) {
-				$cnt = $db->GetOne("select count(avID) from CamelCaseObjectAttributeValues where avID = ?", $av->getAttributeValueID());
+				$cnt = $db->GetOne("select count(avID) from TABLE_NAMEAttributeValues where avID = ?", $av->getAttributeValueID());
 			}
 			
 			if ((!is_object($av)) || ($cnt > 1)) {

@@ -4,7 +4,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class CamelCaseObjectAttributeKey extends AttributeKey {
 
 	public function getIndexedSearchTable() {
-		return 'CamelCaseObjectSearchIndexAttributes';
+		return 'TABLE_NAMESearchIndexAttributes';
 	}
 
 	protected $searchIndexFieldDefinition = 'ATTRIBUTE_ID I(11) UNSIGNED NOTNULL DEFAULT 0 PRIMARY';
@@ -16,7 +16,7 @@ class CamelCaseObjectAttributeKey extends AttributeKey {
 	 */
 	public function getAttributes($ATTRIBUTE_ID, $method = 'getValue') {
 		$db = Loader::db();
-		$values = $db->GetAll("select akID, avID from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ?", array($ATTRIBUTE_ID));
+		$values = $db->GetAll("select akID, avID from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ?", array($ATTRIBUTE_ID));
 		$avl = new AttributeValueList();
 		foreach($values as $val) {
 			$ak = CamelCaseObjectAttributeKey::getByID($val['akID']);
@@ -126,11 +126,11 @@ class CamelCaseObjectAttributeKey extends AttributeKey {
 	public function delete() {
 		parent::delete();
 		$db = Loader::db();
-		$r = $db->Execute('select avID from CamelCaseObjectAttributeValues where akID = ?', array($this->getAttributeKeyID()));
+		$r = $db->Execute('select avID from TABLE_NAMEAttributeValues where akID = ?', array($this->getAttributeKeyID()));
 		while ($row = $r->FetchRow()) {
 			$db->Execute('delete from AttributeValues where avID = ?', array($row['avID']));
 		}
-		$db->Execute('delete from CamelCaseObjectAttributeValues where akID = ?', array($this->getAttributeKeyID()));
+		$db->Execute('delete from TABLE_NAMEAttributeValues where akID = ?', array($this->getAttributeKeyID()));
 	}
 
 }
@@ -151,14 +151,14 @@ class CamelCaseObjectAttributeValue extends AttributeValue {
 
 	public function delete() {
 		$db = Loader::db();
-		$db->Execute('delete from CamelCaseObjectAttributeValues where ATTRIBUTE_ID = ? and akID = ? and avID = ?', array(
+		$db->Execute('delete from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ? and akID = ? and avID = ?', array(
 			$this->item->getCamelCaseObjectID(), 
 			$this->attributeKey->getAttributeKeyID(),
 			$this->getAttributeValueID()
 		));
 		
 		// Before we run delete() on the parent object, we make sure that attribute value isn't being referenced in the table anywhere else
-		$num = $db->GetOne('select count(avID) from CamelCaseObjectAttributeValues where avID = ?', array($this->getAttributeValueID()));
+		$num = $db->GetOne('select count(avID) from TABLE_NAMEAttributeValues where avID = ?', array($this->getAttributeValueID()));
 		if ($num < 1) {
 			parent::delete();
 		}

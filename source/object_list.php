@@ -35,7 +35,7 @@ class CamelCaseObjectList extends DatabaseItemList {
 	protected function setBaseQuery() {
 		$this->setQuery('SELECT tbl.ATTRIBUTE_ID FROM TABLE_NAME tbl ');
 		
-		$this->setupAttributeFilters("left join CamelCaseObjectSearchIndexAttributes on (CamelCaseObjectSearchIndexAttributes.ATTRIBUTE_ID = tbl.ATTRIBUTE_ID)");
+		$this->setupAttributeFilters("left join TABLE_NAMESearchIndexAttributes on (TABLE_NAMESearchIndexAttributes.ATTRIBUTE_ID = tbl.ATTRIBUTE_ID)");
 	}
 
 	/* magic method for filtering by page attributes. */
