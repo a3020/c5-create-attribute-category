@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <schema version="0.3">
-	<table name="CamelCaseObjectAttributeValues">
+	<table name="TABLE_NAMEAttributeValues">
 		<field name="ATTRIBUTE_ID" type="I">
 			<KEY/>
 			<DEFAULT value="0"/>
