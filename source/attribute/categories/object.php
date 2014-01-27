@@ -99,7 +99,7 @@ class CamelCaseObjectAttributeKey extends AttributeKey {
 		parent::saveAttribute($av, $value);
 		$db = Loader::db();
 		$v = array($object->getCamelCaseObjectID(), $this->getAttributeKeyID(), $av->getAttributeValueID());
-		$db->Replace('CamelCaseObjectAttributeValues', array(
+		$db->Replace('TABLE_NAMEAttributeValues', array(
 			'ATTRIBUTE_ID' => $object->getCamelCaseObjectID(), 
 			'akID' => $this->getAttributeKeyID(), 
 			'avID' => $av->getAttributeValueID()
