@@ -9,9 +9,7 @@
 		Create files for an attribute category to save data against.
 		
 	Usage example: 
-		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts
-		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts --p-handle=pro_blog
-		php create.php --at-name-lowercase=blog_post --at-name-camelcase=BlogPost --table-name-camelcase=BlogPosts --p-handle=pro_blog --at-id=blogID
+		php create.php --ac_l=bs_option --ac_c=BsOption --table=BsOptions --p_handle=booking_system --ac_id=optionID
 	
 	Optional parameters:
 		--p-handle (package handle)
@@ -31,19 +29,19 @@ $ATTRIBUTE_ID = 'itemID';
 foreach($arguments as $val) {
 	$val = explode('=', $val);
 	switch(current($val)) {
-		case '--at-name-lowercase':
+		case '--ac_l': //attribute category lowercase
 			$ATTRIBUTE_NAME_LOWERCASE = next($val);
 		break;
-		case '--at-name-camelcase':
+		case '--ac_c': //attribute category camelcase
 			$ATTRIBUTE_NAME_CAMELCASE = next($val);
 		break;
-		case '--at-id':
+		case '--ac_id': //attribute category identifier
 			$ATTRIBUTE_ID = next($val);
 		break;
-		case '--table-name-camelcase':
+		case '--table': //table name camelcase
 			$TABLE_NAME_CAMELCASE = next($val);
 		break;
-		case '--p-handle':
+		case '--p_handle': //package handle
 			$PACKAGE_HANDLE = next($val);
 		break;		
 	}
