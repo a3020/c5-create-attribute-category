@@ -33,9 +33,9 @@ class CamelCaseObject extends Object {
 	
 	public function delete() {
 		$db = Loader::db();
-		$db->Execute("delete from ".self::$table." where ATTRIBUTE_ID = ?", array($this->ATTRIBUTE_ID));
+		$db->Execute("delete from ".self::$table." where ATTRIBUTE_ID = ?", array($this->getCamelCaseObjectID));
 		
-		$r = $db->Execute('select avID, akID from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ?', array($this->ATTRIBUTE_ID));
+		$r = $db->Execute('select avID, akID from TABLE_NAMEAttributeValues where ATTRIBUTE_ID = ?', array($this->getCamelCaseObjectID));
 		Loader::model('attribute/categories/lowercase_object'PACKAGE_HANDLE);
 		while ($row = $r->FetchRow()) {
 			$uak = CamelCaseObjectAttributeKey::getByID($row['akID']);
@@ -44,6 +44,8 @@ class CamelCaseObject extends Object {
 				$av->delete();
 			}
 		}
+		
+		$db->Execute('delete from TABLE_NAMESearchIndexAttributes where ATTRIBUTE_ID = ?', array($this->getCamelCaseObjectID()));
 	}
 	
 	public function getAttribute($ak, $displayMode = false) {
