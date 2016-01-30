@@ -2,8 +2,7 @@
 <?php
 
 /*
-	Author: Adri Kodde (@akodde)
-	Repo: https://github.com/akodde/c5-create-attribute-category
+	Repo: https://github.com/a3020/c5-create-attribute-category
 	
 	Purpose: 
 		Create files for an attribute category to save data against.

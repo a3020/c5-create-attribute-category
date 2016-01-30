@@ -12,5 +12,3 @@ php create.php --ac_l=bs_option --ac_c=BsOption --table=BsOptions --p_handle=boo
 	
 **Additional information:**
 You need to run this file from the command line and provide at least three parameters. The package handle is optional, but recommended. Don't use names such as collection, page, file, etc. as they will likely interfere with existing models.	
-
-**More information:** [http://www.adrikodde.nl/blog/2013/concrete5-creating-attribute-categories/](http://www.adrikodde.nl/blog/2013/concrete5-creating-attribute-categories/)
